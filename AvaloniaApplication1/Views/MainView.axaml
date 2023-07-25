@@ -1,0 +1,47 @@
+<UserControl
+    x:Class="AvaloniaApplication1.Views.MainView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:AvaloniaApplication1.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MainViewModel"
+    mc:Ignorable="d">
+    <Design.DesignStyle>
+        <Style Selector="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Design.DesignStyle>
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainViewModel />
+    </Design.DataContext>
+    <Grid RowDefinitions="auto, auto">
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+            <TextBox Name="input" IsEnabled="{Binding AllowInput}" />
+            <TextBlock IsVisible="{Binding !AllowInput}">Input is not allowed</TextBlock>
+            <Button Command="{Binding CountCommand}" />
+        </StackPanel>
+        <Grid Grid.Row="1" ColumnDefinitions="*, *">
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <TextBlock Text="첫 번째 리스트" />
+                <ListBox ItemsSource="{Binding Items}" />
+                <TextBlock IsVisible="{Binding !Items.Count}">No results found</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <TextBlock Text="두 번째 리스트" />
+                <ListBox
+                    Width="300"
+                    Background="Red"
+                    IsVisible="{Binding !!Items.Count}"
+                    ItemsSource="{Binding Items}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
